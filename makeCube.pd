@@ -1,0 +1,28 @@
+#N canvas 97 209 430 395 10;
+#X obj 53 39 inlet;
+#X obj 53 61 t b b;
+#X obj 113 138 thisdir;
+#X text 48 12 helper abstraction for creating a node called 'cube'
+;
+#X obj 113 201 list \$2 \$3 \$4;
+#X msg 113 222 /cube setTranslation \$1 \$2 \$3;
+#X msg 108 91 createNode cube ModelNode;
+#X obj 22 352 s \$1-to-SPIN;
+#X msg 113 282 /cube setOrientation \$1 \$2 \$3;
+#X obj 113 261 list \$5 \$6 \$7;
+#X msg 98 315 /cube setScale 1 1 1;
+#X msg 113 157 /cube setModelFromFile \$1/models/cube.osg;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 4 0;
+#X connect 1 0 9 0;
+#X connect 1 0 10 0;
+#X connect 1 1 6 0;
+#X connect 2 0 11 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 0;
+#X connect 6 0 7 0;
+#X connect 8 0 7 0;
+#X connect 9 0 8 0;
+#X connect 10 0 7 0;
+#X connect 11 0 7 0;

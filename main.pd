@@ -1,0 +1,257 @@
+#N canvas 1928 -550 960 906 10;
+#X text 69 100 start spinServer and spinViewer with default arguments
+;
+#X obj 20 18 widget-spinConnect \$0;
+#X obj 67 137 bng 20 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 67 268 subwidget-PAT \$0;
+#X msg 67 210 cube;
+#X obj 67 190 loadbang;
+#X text 362 32 This example describes motion control;
+#X text 75 234 Play with the following widget \, which sends setTranslation
+\, setOrientation \, and setScale messages:;
+#X text 109 136 <- Create a cube model;
+#X text 182 163 This is a convinient model \, because it has labels
+that show which direction (axis) each face is looking;
+#X msg 685 184 TabPlaneDragger;
+#X obj 628 180 symbol;
+#X msg 685 167 TabBoxDragger;
+#X msg 685 151 TranslateAxisDragger;
+#X msg 685 134 TrackballDragger;
+#X msg 685 117 Translate2DDragger;
+#X obj 622 303 s \$0-to-SPIN;
+#X msg 691 83 NULL;
+#X obj 495 416 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 516 416 STATIC;
+#X text 516 431 SELECT;
+#X text 516 446 DRAG;
+#X text 516 461 THROW;
+#X msg 494 485 /cube setInteractionMode \$1;
+#X msg 578 560 /cube debug;
+#X obj 433 65 bng 20 250 50 0 \$0-reset \$0-reset-set RESET 25 11 0
+12 -262144 -1 -1;
+#X msg 571 528 debug scenegraph;
+#X msg 685 211 TabBoxTrackballDragger;
+#X msg 685 251 Translate1DDrager;
+#X msg 685 228 TabPlaneTrackballDragger;
+#N canvas 499 74 614 703 to-azim-elev 0;
+#X obj 333 376 expr sqrt($f1);
+#X obj 333 348 + 0;
+#X obj 88 323 * 0;
+#X obj 353 286 * 0;
+#X msg 360 512 0;
+#X msg 243 275 -1;
+#X msg 278 275 1;
+#X obj 52 259 expr ($f1-0.5)/0.5;
+#X obj 243 155 expr ($f1-0.5)/0.5;
+#X obj 52 26 inlet;
+#X obj 314 643 outlet;
+#X obj 360 441 expr 90 - ($f1*90.0);
+#X obj 360 486 moses 0;
+#X obj 243 248 moses 0;
+#X obj 52 289 t f f f;
+#X obj 243 189 t f f f;
+#X text 111 26 float x \, float y;
+#X obj 333 403 t f f;
+#X obj 52 109 unpack f f;
+#X msg 52 69 \$2 \$1;
+#X obj 52 515 expr -acos($f1/$f3) * 180 / 3.1415 * $f2;
+#X obj 314 621 pack 0 0;
+#X text 376 621 azim elev;
+#X connect 0 0 17 0;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 1;
+#X connect 4 0 21 1;
+#X connect 5 0 20 1;
+#X connect 6 0 20 1;
+#X connect 7 0 14 0;
+#X connect 8 0 15 0;
+#X connect 9 0 19 0;
+#X connect 11 0 12 0;
+#X connect 12 0 4 0;
+#X connect 12 1 21 1;
+#X connect 13 0 5 0;
+#X connect 13 1 6 0;
+#X connect 14 0 20 0;
+#X connect 14 1 2 0;
+#X connect 14 2 2 1;
+#X connect 15 0 13 0;
+#X connect 15 1 3 0;
+#X connect 15 2 3 1;
+#X connect 17 0 20 2;
+#X connect 17 1 11 0;
+#X connect 18 0 7 0;
+#X connect 18 1 8 0;
+#X connect 19 0 18 0;
+#X connect 20 0 21 0;
+#X connect 21 0 10 0;
+#X restore 737 567 pd to-azim-elev;
+#X obj 737 546 pack f f;
+#X obj 737 609 s \$0-to-SPIN;
+#X msg 737 588 /ptr setOrientation \$2 0 \$1;
+#X obj 697 381 grid grid1 144 0 1 144 0 1 0 0.001 0.001 10 10 772 382
+;
+#X obj 697 454 cnv 1 144 1 empty empty empty 74 8 1 8 -16662 -4160
+0;
+#X obj 770 381 cnv 1 1 144 empty empty empty 20 12 0 14 -16662 -262144
+0;
+#X obj 710 740 tgl 25 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 710 768 /ptr manipulate \$1;
+#X obj 684 809 s \$0-to-SPIN;
+#X obj 617 742 tgl 25 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 617 770 /ptr grab \$1;
+#X obj 635 636 key;
+#X obj 710 706 sel 1;
+#X msg 770 740 /ptr slide \$1;
+#X obj 770 716 stepperGUI;
+#X obj 710 686 == 109;
+#X text 752 686 m;
+#X obj 680 635 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 630 706 sel 1;
+#X text 675 686 g;
+#X obj 630 686 == 103;
+#X obj 397 266 r \$0-from-SPIN;
+#X obj 397 288 OSCparse /ptr;
+#X obj 397 309 route intersectsWith;
+#X obj 635 657 spigot;
+#X obj 397 495 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 396 522 /ptr setVisible \$1;
+#X msg 373 700 /dragon setOrientationMode 3;
+#X msg 622 278 /cube setManipulator \$1;
+#X obj 543 592 s \$0-to-SPIN-TCP;
+#X obj 398 332 list2symbol;
+#X obj 655 18 cnv 15 250 25 empty \$0-cnv intersectsWith:NULL 5 12
+0 12 -233017 -66577 0;
+#X obj 398 374 s \$0-cnv;
+#X msg 398 353 label intersectsWith:\$1;
+#X text 783 167 <--;
+#X obj 168 797 thisdir;
+#X obj 83 415 thisdir;
+#X obj 83 385 bng 20 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 113 388 set the file path to the model;
+#X msg 83 434 /cow setModelFromFile \$1/Resources/cow.osg;
+#X obj 14 495 widget-nodeEditor \$0;
+#X obj 101 808 pack s s;
+#X obj 168 777 loadbang;
+#X obj 147 778 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 105 854 s \$0-to-SPIN-TCP;
+#X msg 105 831 createNode \$1 ModelNode \, /\$1 setModelFromFile \$2/models/\$1
+;
+#X msg 50 783 windmill.osg;
+#X obj 345 736 s \$0-to-SPIN-TCP;
+#N canvas 616 22 824 644 setup_scene 1;
+#X msg 247 262 createNode grid GridNode;
+#X obj 356 525 s \$0-to-SPIN-TCP;
+#X obj 499 174 loadbang;
+#X obj 499 195 hostname;
+#X symbolatom 503 222 25 0 0 0 - - -;
+#X obj 460 222 symbol;
+#X obj 376 96 t b b;
+#X obj 313 29 inlet;
+#X obj 213 20 r \$0-reset;
+#X obj 363 133 delay 50;
+#X msg 429 132 createNode ptr PointerNode;
+#X obj 460 189 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 504 337 /\$1 setVelocity 0 0 0 \, /\$1 setTranslation 0 -5 0.5
+\, /\$1 setOrientation 0 0 0;
+#X msg 460 248 /ptr setParent \$1 \, /ptr setTranslation 0 1 -0.25
+\, /ptr setOrientation 0 0 0 \, /ptr setThickness 0.02;
+#X msg 40 210 1 2 1 0.5 \, 2 -2 1 0.5 \, 3 0 3 0.5;
+#X obj 109 303 thisdir;
+#X obj 109 283 loadbang;
+#X obj 88 284 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 40 324 list prepend;
+#X obj 313 50 t b b b b;
+#X obj 51 125 makeCube \$0 0 5 0;
+#X msg 40 346 createNode shp\$2 ShapeNode \, /shp\$2 setTranslation
+\$3 \$4 \$5 \, /shp\$2 setOrientation 0 0 0 \, /shp\$2 setScale 1 1
+1 \, /shp\$2 setStateSetFromFile \$1/models/\$2.jpg \, /shp\$2 setInteractionMode
+2;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 5 1;
+#X connect 3 0 4 0;
+#X connect 5 0 13 0;
+#X connect 5 0 12 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 7 0 19 0;
+#X connect 8 0 19 0;
+#X connect 9 0 5 0;
+#X connect 10 0 1 0;
+#X connect 11 0 5 0;
+#X connect 12 0 1 0;
+#X connect 13 0 1 0;
+#X connect 14 0 18 0;
+#X connect 15 0 18 1;
+#X connect 16 0 15 0;
+#X connect 17 0 15 0;
+#X connect 18 0 21 0;
+#X connect 19 0 0 0;
+#X connect 19 0 20 0;
+#X connect 19 3 6 0;
+#X connect 21 0 1 0;
+#X restore 67 163 pd setup_scene;
+#X connect 2 0 79 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 10 0 11 0;
+#X connect 11 0 59 0;
+#X connect 12 0 11 0;
+#X connect 13 0 11 0;
+#X connect 14 0 11 0;
+#X connect 15 0 11 0;
+#X connect 17 0 11 0;
+#X connect 18 0 23 0;
+#X connect 23 0 60 0;
+#X connect 24 0 60 0;
+#X connect 26 0 60 0;
+#X connect 27 0 11 0;
+#X connect 28 0 11 0;
+#X connect 29 0 11 0;
+#X connect 30 0 33 0;
+#X connect 31 0 30 0;
+#X connect 33 0 32 0;
+#X connect 34 0 31 0;
+#X connect 34 1 31 1;
+#X connect 37 0 38 0;
+#X connect 38 0 39 0;
+#X connect 40 0 41 0;
+#X connect 41 0 39 0;
+#X connect 42 0 55 0;
+#X connect 43 0 37 0;
+#X connect 44 0 39 0;
+#X connect 45 0 44 0;
+#X connect 46 0 43 0;
+#X connect 48 0 55 1;
+#X connect 49 0 40 0;
+#X connect 51 0 49 0;
+#X connect 52 0 53 0;
+#X connect 53 0 54 0;
+#X connect 54 0 61 0;
+#X connect 55 0 46 0;
+#X connect 55 0 51 0;
+#X connect 56 0 57 0;
+#X connect 57 0 60 0;
+#X connect 58 0 78 0;
+#X connect 59 0 16 0;
+#X connect 61 0 64 0;
+#X connect 64 0 63 0;
+#X connect 66 0 72 1;
+#X connect 67 0 70 0;
+#X connect 68 0 67 0;
+#X connect 72 0 76 0;
+#X connect 73 0 66 0;
+#X connect 74 0 66 0;
+#X connect 76 0 75 0;
+#X connect 77 0 72 0;
