@@ -1,74 +1,255 @@
-#N canvas 2225 -359 924 739 10;
-#X obj 111 28 inlet;
-#X obj 125 168 list \$2 \$3 \$4 \$5;
+#N canvas 58 22 1382 790 10;
+#X obj 112 28 inlet;
 #X obj 46 60 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 25 576 s \$1-to-SPIN-TCP;
-#X obj 257 176 thisdir;
-#X obj 257 156 loadbang;
-#X obj 236 157 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 125 193 list prepend;
-#X obj 124 73 t b b b b;
-#X msg 175 365 createNode shp\$2_shadow ConstraintsNode \, /shp\$2_shadow
-setConstraintMode 0 \, /shp\$2_shadow setCubeSize 1000 1000 0;
-#X obj 106 225 t a a a;
-#X msg 184 281 createNode shp\$2 ShapeNode \, /shp\$2 setTranslation
-\$3 \$4 \$5 \, /shp\$1 setOrientation 0 0 0 \, /shp\$2 setScale 1 1
-1 \, /shp\$2 setStateSetFromFile \$1/Resources/\$2.jpg \, /shp\$2 setInteractionMode
-2 \, /shp\$2 setReportMode 2;
-#X obj 567 53 r \$1-from-SPIN;
-#X obj 567 75 OSCparse /shp\$2;
-#X obj 568 96 route global6DOF;
-#X msg 426 174 setTranslation \$1 \$2 \$3;
-#X obj 578 288 OSCprepend /shp\$2_shadow;
-#X obj 647 376 s \$1-to-SPIN;
-#X text 563 28 shadow updater:;
-#X msg 598 209 setScale \$1 \$1 \$1;
-#X msg 205 675 /shadow-square.png setTextureBlend 0;
-#X obj 220 598 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X msg 154 520 /shadow-square.png setLighting 0 \, /shadow-square.png
-setTextureBlend 1;
-#X msg 171 422 createNode shp\$2_shadow_img ShapeNode \, /shp\$2_shadow_img
-setParent shp\$2_shadow \, /shp\$2_shadow_img setShape 6 \, /shp\$2_shadow_img
-setStateSetFromFile \$1/Resources/shadow-square.png \, /shp\$2_shadow_img
-setOrientation 90 0 0 \, /shp\$2_shadow_img setScale 1 1 1;
-#X msg 747 255 setColor 1 1 1 \$1;
-#X obj 747 277 OSCprepend /shp\$2_shadow_img;
-#X msg 595 141 \$3;
-#X obj 595 163 moses 0.5;
-#X obj 741 214 expr 1/(1+abs($f1-0.5)/2);
-#X obj 597 187 expr 1.3+pow(abs($f1-0.5) \, 1.0000001)/2;
-#X connect 0 0 8 0;
-#X connect 1 0 7 0;
-#X connect 2 0 1 0;
-#X connect 4 0 7 1;
-#X connect 5 0 4 0;
-#X connect 6 0 4 0;
-#X connect 7 0 10 0;
-#X connect 8 3 1 0;
-#X connect 9 0 3 0;
-#X connect 10 0 22 0;
-#X connect 10 1 23 0;
-#X connect 10 2 11 0;
-#X connect 10 2 9 0;
-#X connect 11 0 3 0;
-#X connect 12 0 13 0;
-#X connect 13 0 14 0;
-#X connect 14 0 15 0;
-#X connect 14 0 26 0;
+#X obj 173 750 s \$1-to-SPIN-TCP;
+#X obj 251 57 thisdir;
+#X obj 251 37 loadbang;
+#X obj 230 38 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg -77 523 /shadow-square.png setLighting 0 \, /shadow-square.png
+setTextureBlend 0;
+#X obj -40 447 expr $f2+50;
+#X msg 43 364 \$2;
+#X obj 169 130 list prepend;
+#X text 482 143 path id shape texture x y z pitch roll yaw sx sy sz
+;
+#X text 482 131 1____2__3_____4_______5_6_7_8_____9____10__11_12_13
+;
+#X obj 170 105 list \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 \$10 \$11 \$12
+\$13;
+#N canvas 318 89 1122 440 shadow_updater 0;
+#X obj 173 50 r \$1-from-SPIN;
+#X obj 173 72 OSCparse /shp\$2;
+#X obj 174 93 route global6DOF;
+#X msg 32 171 setTranslation \$1 \$2 \$3;
+#X obj 184 305 OSCprepend /shp\$2_shadow;
+#X obj 253 373 s \$1-to-SPIN;
+#X text 169 25 shadow updater:;
+#X msg 353 252 setColor 1 1 1 \$1;
+#X obj 353 274 OSCprepend /shp\$2_shadow_img;
+#X msg 201 138 \$3;
+#X obj 201 160 moses 0.5;
+#X obj 207 230 * \$11;
+#X obj 209 208 t f f;
+#X obj 247 230 * \$12;
+#X obj 287 230 * \$13;
+#X obj 202 257 pack 0 0 0;
+#X msg 204 276 setScale \$1 \$2 \$3;
+#X obj 203 184 expr 1.3+pow(abs($f1-0.5) \, 1.0000001)/4;
+#X obj 347 211 expr 1/(1+abs($f1-0.5));
+#X obj 690 51 r \$1-from-SPIN;
+#X obj 691 94 route global6DOF;
+#X msg 549 172 setTranslation \$1 \$2 \$3;
+#X obj 770 374 s \$1-to-SPIN;
+#X msg 870 253 setColor 1 1 1 \$1;
+#X msg 718 139 \$3;
+#X obj 718 161 moses 0.5;
+#X obj 724 231 * \$11;
+#X obj 726 209 t f f;
+#X obj 764 231 * \$12;
+#X obj 804 231 * \$13;
+#X obj 719 258 pack 0 0 0;
+#X msg 721 277 setScale \$1 \$2 \$3;
+#X obj 720 185 expr 1.3+pow(abs($f1-0.5) \, 1.0000001)/4;
+#X obj 864 212 expr 1/(1+abs($f1-0.5));
+#X obj 690 73 OSCparse /shp\$2_g;
+#X obj 701 306 OSCprepend /shp\$2_g_shadow;
+#X obj 870 275 OSCprepend /shp\$2_g_shadow_img;
+#X obj 453 133 distance3D;
+#X obj 510 20 loadbang;
+#X obj 510 42 f \$5;
+#X obj 510 62 + 6;
+#X obj 510 84 list append \$6 \$7;
+#X obj 464 21 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 453 108 \$1 \$2 \$3;
+#X obj 454 153 s error\$2;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 0 9 0;
+#X connect 2 0 43 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 7 0 8 0;
+#X connect 8 0 5 0;
+#X connect 9 0 10 0;
+#X connect 10 1 17 0;
+#X connect 10 1 18 0;
+#X connect 11 0 15 0;
+#X connect 12 0 11 0;
+#X connect 12 1 13 0;
+#X connect 12 1 14 0;
+#X connect 13 0 15 1;
+#X connect 14 0 15 2;
 #X connect 15 0 16 0;
-#X connect 16 0 17 0;
-#X connect 19 0 16 0;
-#X connect 20 0 3 0;
-#X connect 21 0 20 0;
-#X connect 22 0 3 0;
-#X connect 23 0 3 0;
+#X connect 16 0 4 0;
+#X connect 17 0 12 0;
+#X connect 18 0 7 0;
+#X connect 19 0 34 0;
+#X connect 20 0 21 0;
+#X connect 20 0 24 0;
+#X connect 21 0 35 0;
+#X connect 23 0 36 0;
 #X connect 24 0 25 0;
-#X connect 25 0 17 0;
-#X connect 26 0 27 0;
+#X connect 25 1 32 0;
+#X connect 25 1 33 0;
+#X connect 26 0 30 0;
+#X connect 27 0 26 0;
 #X connect 27 1 28 0;
 #X connect 27 1 29 0;
-#X connect 28 0 24 0;
-#X connect 29 0 19 0;
+#X connect 28 0 30 1;
+#X connect 29 0 30 2;
+#X connect 30 0 31 0;
+#X connect 31 0 35 0;
+#X connect 32 0 27 0;
+#X connect 33 0 23 0;
+#X connect 34 0 20 0;
+#X connect 35 0 22 0;
+#X connect 36 0 22 0;
+#X connect 37 0 44 0;
+#X connect 38 0 39 0;
+#X connect 39 0 40 0;
+#X connect 40 0 41 0;
+#X connect 41 0 37 1;
+#X connect 42 0 39 0;
+#X connect 43 0 37 0;
+#X restore 412 41 pd shadow_updater;
+#X obj 750 704 s \$1-to-SPIN-TCP;
+#X obj 767 218 t a a a;
+#X msg 882 553 /shadow-square.png setLighting 0 \, /shadow-square.png
+setTextureBlend 0;
+#X text 847 250 GUIDE:;
+#X obj 179 160 t a a;
+#X obj -40 468 pack 0 0;
+#X msg -40 488 /shp\$2_shadow_img setRenderBin \$1;
+#X obj 47 440 pack 0 0;
+#X msg 47 461 /shp\$2_g_shadow_img setRenderBin \$1;
+#X obj 47 418 expr $f2+70;
+#X obj -21 301 t a a;
+#X msg 417 430 \$2;
+#X obj 401 510 pack 0 0 0;
+#X msg 402 534 /shp\$3 setTranslation 8 \$1 \$2;
+#X msg 566 433 \$13;
+#X obj 573 468 expr $f1/2;
+#X obj 380 457 expr ($f2*3) - 8;
+#X text 484 162 SAME for object args \, except \$1 is \$0 from parent
+;
+#X obj 971 604 inlet;
+#X msg 971 628 debug;
+#X obj 946 667 OSCprepend /shp\$2;
+#X msg 369 585 createNode shp\$2_shadow ConstraintsNode \, /shp\$2_shadow
+setConstraintMode 0 \, /shp\$2_shadow setCubeSize 1000 1000 0 \, /shp\$2_shadow
+setCubeOffset 0 0 -0.0\$2;
+#X msg 1098 624 debug;
+#X obj 1073 663 OSCprepend /shp\$2_shadow;
+#X msg 903 398 createNode shp\$2_g_shadow ConstraintsNode \, /shp\$2_g_shadow
+setConstraintMode 0 \, /shp\$2_g_shadow setCubeSize 1000 1000 0 \,
+/shp\$2_g_shadow setCubeOffset 0 0 -0.0\$2;
+#X msg 335 638 createNode shp\$2_shadow_img ShapeNode \, /shp\$2_shadow_img
+setParent shp\$2_shadow \, /shp\$2_shadow_img setShape 6 \, /shp\$2_shadow_img
+setStateSetFromFile \$1/Resources/shadow-square.png \, /shp\$2_shadow_img
+setOrientation -90 0 0 \, /shp\$2_shadow_img setScale 1 1 1;
+#X msg 899 455 createNode shp\$2_g_shadow_img ShapeNode \, /shp\$2_g_shadow_img
+setParent shp\$2_g_shadow \, /shp\$2_g_shadow_img setShape 6 \, /shp\$2_g_shadow_img
+setStateSetFromFile \$1/Resources/shadow-square.png \, /shp\$2_g_shadow_img
+setOrientation -90 0 0 \, /shp\$2_g_shadow_img setScale 1 1 1;
+#X obj 112 58 t b b;
+#X obj 306 227 t a a a a a a;
+#X msg 402 277 createNode shp\$2_const ConstraintsNode \, /shp\$2_const
+setCubeSize 100 100 50 \, /floorConstraint setCubeOffset 0 0 25;
+#X msg 408 330 createNode shp\$2 ShapeNode \, /shp\$2 setParent world
+\, /shp\$2 setShape \$3 \, /shp\$2 setOrientation \$8 \$9 \$10 \, /shp\$2
+setScale \$11 \$12 \$13 \, /shp\$2 setStateSetFromFile \$1/Resources/\$4
+\, /shp\$2 setInteractionMode 2 \, /shp\$2 setReportMode 2 \, /shp\$2
+setConstraintMode 2 \, /shp\$2 setTarget floor \, /shp\$2 setCubeSize
+100 100 50 \, /shp\$2 setCubeOffset 0 0 25;
+#X obj 888 25 r \$1-from-SPIN;
+#X obj 888 47 OSCparse /ptr;
+#X obj 892 80 route grab manipulate;
+#X obj 897 128 sel 0;
+#X obj 912 200 list prepend;
+#X obj 913 175 list \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 \$10 \$11 \$12
+\$13;
+#X msg 908 307 createNode shp\$2_g ShapeNode \, /shp\$2_g setParent
+floorConstraint \, /shp\$2_g setShape \$3 \, /shp\$2_g setTranslation
+\$5 \$6 \$7 \, /shp\$2_g setOrientation \$8 \$9 \$10 \, /shp\$2_g setScale
+\$11 \$12 \$13 \, /shp\$2_g setStateSetFromFile \$1/Resources/\$4 \,
+/shp\$2_g setInteractionMode 2 \, /shp\$2_g setReportMode 2;
+#X obj 1071 133 thisdir;
+#X obj 1071 113 loadbang;
+#X obj 1050 114 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 855 97 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 921 232 /shp\$2_g setTranslation \$5 \$6 \$7 \, /shp\$2_g setOrientation
+\$8 \$9 \$10 \, /shp\$2_g setScale \$11 \$12 \$13;
+#X obj 921 268 s \$1-to-SPIN-TCP;
+#X text 870 7 reset guide pieces if moved:;
+#X connect 0 0 41 0;
+#X connect 1 0 41 0;
+#X connect 3 0 9 1;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X connect 6 0 2 0;
+#X connect 7 0 19 0;
+#X connect 8 0 19 1;
+#X connect 8 0 21 1;
+#X connect 9 0 18 0;
+#X connect 12 0 9 0;
+#X connect 15 0 16 0;
+#X connect 15 0 51 0;
+#X connect 15 1 40 0;
+#X connect 15 2 38 0;
+#X connect 16 0 14 0;
+#X connect 18 0 24 0;
+#X connect 18 1 15 0;
+#X connect 18 1 42 0;
+#X connect 19 0 20 0;
+#X connect 20 0 2 0;
+#X connect 21 0 22 0;
+#X connect 22 0 2 0;
+#X connect 23 0 21 0;
+#X connect 24 0 6 0;
+#X connect 24 0 7 0;
+#X connect 24 0 23 0;
+#X connect 24 1 8 0;
+#X connect 25 0 26 2;
+#X connect 26 0 27 0;
+#X connect 27 0 2 0;
+#X connect 28 0 29 0;
+#X connect 29 0 26 1;
+#X connect 30 0 26 0;
+#X connect 32 0 33 0;
+#X connect 33 0 34 0;
+#X connect 34 0 14 0;
+#X connect 35 0 2 0;
+#X connect 36 0 37 0;
+#X connect 37 0 14 0;
+#X connect 38 0 14 0;
+#X connect 39 0 2 0;
+#X connect 40 0 14 0;
+#X connect 41 0 12 0;
+#X connect 42 0 30 0;
+#X connect 42 1 44 0;
+#X connect 42 2 39 0;
+#X connect 42 3 35 0;
+#X connect 42 4 25 0;
+#X connect 42 4 28 0;
+#X connect 42 4 43 0;
+#X connect 43 0 2 0;
+#X connect 44 0 2 0;
+#X connect 45 0 46 0;
+#X connect 46 0 47 0;
+#X connect 47 0 48 0;
+#X connect 47 1 48 0;
+#X connect 48 0 50 0;
+#X connect 49 0 56 0;
+#X connect 50 0 49 0;
+#X connect 51 0 14 0;
+#X connect 52 0 49 1;
+#X connect 53 0 52 0;
+#X connect 54 0 52 0;
+#X connect 55 0 50 0;
+#X connect 56 0 57 0;
