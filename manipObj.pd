@@ -128,12 +128,11 @@ setTextureBlend 0;
 #X msg 47 461 /shp\$2_g_shadow_img setRenderBin \$1;
 #X obj 47 418 expr $f2+70;
 #X obj -21 301 t a a;
-#X msg 417 430 \$2;
-#X obj 401 510 pack 0 0 0;
-#X msg 402 534 /shp\$3 setTranslation 8 \$1 \$2;
-#X msg 566 433 \$13;
-#X obj 573 468 expr $f1/2;
-#X obj 380 457 expr ($f2*3) - 8;
+#X msg 409 473 \$2;
+#X obj 393 533 pack 0 0 0;
+#X msg 558 476 \$13;
+#X obj 565 511 expr $f1/2;
+#X obj 372 500 expr ($f2*3) - 8;
 #X text 484 162 SAME for object args \, except \$1 is \$0 from parent
 ;
 #X obj 971 604 inlet;
@@ -157,14 +156,6 @@ setStateSetFromFile \$1/Resources/shadow-square.png \, /shp\$2_g_shadow_img
 setOrientation -90 0 0 \, /shp\$2_g_shadow_img setScale 1 1 1;
 #X obj 112 58 t b b;
 #X obj 306 227 t a a a a a a;
-#X msg 402 277 createNode shp\$2_const ConstraintsNode \, /shp\$2_const
-setCubeSize 100 100 50 \, /floorConstraint setCubeOffset 0 0 25;
-#X msg 408 330 createNode shp\$2 ShapeNode \, /shp\$2 setParent world
-\, /shp\$2 setShape \$3 \, /shp\$2 setOrientation \$8 \$9 \$10 \, /shp\$2
-setScale \$11 \$12 \$13 \, /shp\$2 setStateSetFromFile \$1/Resources/\$4
-\, /shp\$2 setInteractionMode 2 \, /shp\$2 setReportMode 2 \, /shp\$2
-setConstraintMode 2 \, /shp\$2 setTarget floor \, /shp\$2 setCubeSize
-100 100 50 \, /shp\$2 setCubeOffset 0 0 25;
 #X obj 888 25 r \$1-from-SPIN;
 #X obj 888 47 OSCparse /ptr;
 #X obj 892 80 route grab manipulate;
@@ -172,11 +163,6 @@ setConstraintMode 2 \, /shp\$2 setTarget floor \, /shp\$2 setCubeSize
 #X obj 912 200 list prepend;
 #X obj 913 175 list \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 \$10 \$11 \$12
 \$13;
-#X msg 908 307 createNode shp\$2_g ShapeNode \, /shp\$2_g setParent
-floorConstraint \, /shp\$2_g setShape \$3 \, /shp\$2_g setTranslation
-\$5 \$6 \$7 \, /shp\$2_g setOrientation \$8 \$9 \$10 \, /shp\$2_g setScale
-\$11 \$12 \$13 \, /shp\$2_g setStateSetFromFile \$1/Resources/\$4 \,
-/shp\$2_g setInteractionMode 2 \, /shp\$2_g setReportMode 2;
 #X obj 1071 133 thisdir;
 #X obj 1071 113 loadbang;
 #X obj 1050 114 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
@@ -187,8 +173,23 @@ floorConstraint \, /shp\$2_g setShape \$3 \, /shp\$2_g setTranslation
 \$8 \$9 \$10 \, /shp\$2_g setScale \$11 \$12 \$13;
 #X obj 921 268 s \$1-to-SPIN-TCP;
 #X text 870 7 reset guide pieces if moved:;
-#X connect 0 0 41 0;
-#X connect 1 0 41 0;
+#X msg 394 557 /shp\$3_const setTranslation 8 \$1 \$2;
+#X msg 401 250 createNode shp\$2_const ConstraintsNode \, /shp\$2_const
+setCubeSize 100 100 50 \, /floorConstraint setCubeOffset 0 0 25 \,
+/shp\$2_const setInteractionMode 3;
+#X msg 406 303 createNode shp\$2 ShapeNode \, /shp\$2 setParent shp\$2_const
+\, /shp\$2 setShape \$3 \, /shp\$2 setStateSetFromFile \$1/Resources/\$4
+\, /shp\$2 setInteractionMode 1 \, /shp\$2 setReportMode 2;
+#X msg 415 373 /shp\$2_const setOrientation \$8 \$9 \$10 \, /shp\$2_const
+setScale \$11 \$12 \$13 \, /shp\$2_const setReportMode 2 \, /shp\$2_const
+setConstraintMode 2 \, /shp\$2_const setTarget floor;
+#X msg 908 307 createNode shp\$2_g ShapeNode \, /shp\$2_g setShape
+\$3 \, /shp\$2_g setTranslation \$5 \$6 \$7 \, /shp\$2_g setOrientation
+\$8 \$9 \$10 \, /shp\$2_g setScale \$11 \$12 \$13 \, /shp\$2_g setStateSetFromFile
+\$1/Resources/\$4 \, /shp\$2_g setInteractionMode 3 \, /shp\$2_g setReportMode
+2;
+#X connect 0 0 40 0;
+#X connect 1 0 40 0;
 #X connect 3 0 9 1;
 #X connect 4 0 3 0;
 #X connect 5 0 3 0;
@@ -199,13 +200,13 @@ floorConstraint \, /shp\$2_g setShape \$3 \, /shp\$2_g setTranslation
 #X connect 9 0 18 0;
 #X connect 12 0 9 0;
 #X connect 15 0 16 0;
-#X connect 15 0 51 0;
-#X connect 15 1 40 0;
-#X connect 15 2 38 0;
+#X connect 15 0 59 0;
+#X connect 15 1 39 0;
+#X connect 15 2 37 0;
 #X connect 16 0 14 0;
 #X connect 18 0 24 0;
 #X connect 18 1 15 0;
-#X connect 18 1 42 0;
+#X connect 18 1 41 0;
 #X connect 19 0 20 0;
 #X connect 20 0 2 0;
 #X connect 21 0 22 0;
@@ -216,40 +217,42 @@ floorConstraint \, /shp\$2_g setShape \$3 \, /shp\$2_g setTranslation
 #X connect 24 0 23 0;
 #X connect 24 1 8 0;
 #X connect 25 0 26 2;
-#X connect 26 0 27 0;
-#X connect 27 0 2 0;
-#X connect 28 0 29 0;
-#X connect 29 0 26 1;
-#X connect 30 0 26 0;
+#X connect 26 0 55 0;
+#X connect 27 0 28 0;
+#X connect 28 0 26 1;
+#X connect 29 0 26 0;
+#X connect 31 0 32 0;
 #X connect 32 0 33 0;
-#X connect 33 0 34 0;
-#X connect 34 0 14 0;
-#X connect 35 0 2 0;
-#X connect 36 0 37 0;
+#X connect 33 0 14 0;
+#X connect 34 0 2 0;
+#X connect 35 0 36 0;
+#X connect 36 0 14 0;
 #X connect 37 0 14 0;
-#X connect 38 0 14 0;
-#X connect 39 0 2 0;
-#X connect 40 0 14 0;
-#X connect 41 0 12 0;
-#X connect 42 0 30 0;
-#X connect 42 1 44 0;
-#X connect 42 2 39 0;
-#X connect 42 3 35 0;
-#X connect 42 4 25 0;
-#X connect 42 4 28 0;
-#X connect 42 4 43 0;
-#X connect 43 0 2 0;
-#X connect 44 0 2 0;
-#X connect 45 0 46 0;
-#X connect 46 0 47 0;
-#X connect 47 0 48 0;
-#X connect 47 1 48 0;
-#X connect 48 0 50 0;
-#X connect 49 0 56 0;
-#X connect 50 0 49 0;
-#X connect 51 0 14 0;
-#X connect 52 0 49 1;
-#X connect 53 0 52 0;
-#X connect 54 0 52 0;
-#X connect 55 0 50 0;
-#X connect 56 0 57 0;
+#X connect 38 0 2 0;
+#X connect 39 0 14 0;
+#X connect 40 0 12 0;
+#X connect 41 0 29 0;
+#X connect 41 1 57 0;
+#X connect 41 1 58 0;
+#X connect 41 2 38 0;
+#X connect 41 3 34 0;
+#X connect 41 4 25 0;
+#X connect 41 4 27 0;
+#X connect 41 4 56 0;
+#X connect 42 0 43 0;
+#X connect 43 0 44 0;
+#X connect 44 0 45 0;
+#X connect 44 1 45 0;
+#X connect 45 0 47 0;
+#X connect 46 0 52 0;
+#X connect 47 0 46 0;
+#X connect 48 0 46 1;
+#X connect 49 0 48 0;
+#X connect 50 0 48 0;
+#X connect 51 0 47 0;
+#X connect 52 0 53 0;
+#X connect 55 0 2 0;
+#X connect 56 0 2 0;
+#X connect 57 0 2 0;
+#X connect 58 0 2 0;
+#X connect 59 0 14 0;

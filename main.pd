@@ -1,4 +1,4 @@
-#N canvas 1523 -276 953 807 10;
+#N canvas 1502 -280 953 807 10;
 #X obj 20 48 widget-spinConnect \$0;
 #X msg 139 593 TabPlaneDragger;
 #X obj 82 589 symbol;
@@ -8,13 +8,6 @@
 #X msg 139 526 Translate2DDragger;
 #X obj 76 712 s \$0-to-SPIN;
 #X msg 145 492 NULL;
-#X obj 495 426 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
-#X text 516 426 STATIC;
-#X text 516 441 SELECT;
-#X text 516 456 DRAG;
-#X text 516 471 THROW;
-#X msg 494 495 /cube setInteractionMode \$1;
 #X msg 578 570 /cube debug;
 #X obj 56 122 bng 20 250 50 0 empty empty empty 25 11 0 12 -262144
 -1 -1;
@@ -78,7 +71,7 @@
 #X obj 731 432 pack f f;
 #X obj 731 495 s \$0-to-SPIN;
 #X msg 731 474 /ptr setOrientation \$2 0 \$1;
-#X obj 691 267 grid grid1 144 0 1 144 0 1 0 0.001 0.001 10 10 783 265
+#X obj 691 267 grid grid1 144 0 1 144 0 1 0 0.001 0.001 10 10 754 242
 ;
 #X obj 691 340 cnv 1 144 1 empty empty empty 74 8 1 8 -16662 -4160
 0;
@@ -88,7 +81,7 @@
 1;
 #X msg 780 668 /ptr manipulate \$1;
 #X obj 754 709 s \$0-to-SPIN;
-#X obj 687 642 tgl 25 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 687 642 tgl 25 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 687 670 /ptr grab \$1;
 #X obj 705 536 key;
@@ -97,32 +90,30 @@
 #X obj 840 616 stepperGUI;
 #X obj 780 586 == 109;
 #X text 822 586 m;
-#X obj 750 535 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 750 535 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 700 606 sel 1;
 #X text 745 586 g;
 #X obj 700 586 == 103;
 #X obj 705 557 spigot;
-#X obj 397 505 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 364 585 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg 396 532 /ptr setVisible \$1;
+#X msg 363 612 /ptr setVisible \$1;
 #X msg 76 687 /cube setManipulator \$1;
 #X obj 543 602 s \$0-to-SPIN-TCP;
-#X obj 12 451 cnv 15 400 25 empty \$0-cnv intersectsWith:shp2_g 5 12
-0 12 -233017 -66577 0;
+#X obj 12 451 cnv 15 100 60 empty \$0-cnv intersectsWith:cube 20 12
+0 14 -233017 -66577 0;
 #X text 236 549 <--;
 #X obj 597 16 widget-nodeEditor \$0;
 #X obj 305 745 s \$0-to-SPIN-TCP;
 #N canvas 579 22 824 644 setup_scene 0;
 #X msg 443 490 createNode grid GridNode;
-#X obj 356 525 s \$0-to-SPIN-TCP;
+#X obj 354 604 s \$0-to-SPIN-TCP;
 #X obj 376 96 t b b;
 #X obj 313 29 inlet;
 #X obj 213 20 r \$0-reset;
 #X obj 363 133 delay 50;
 #X msg 429 132 createNode ptr PointerNode;
-#X msg 460 248 /ptr setParent \$1 \, /ptr setTranslation 0 1 -0.25
-\, /ptr setOrientation 0 0 0 \, /ptr setThickness 0.02;
 #X obj 313 50 t b b b b;
 #X obj 658 518 makeCube \$0 0 5 0;
 #X obj 475 209 userReg;
@@ -153,33 +144,45 @@ setScale 100 100 100 \, /floor setStateSetFromFile \$2/Resources/floor.jpg
 -3 -0.1 -0.03 \, /padTarget setScale 3.5 1 2 \, /padTarget setStateSetFromFile
 \$1/Resources/target-guide.png \, /target-guide.png setLighting 0 \,
 /target-guide.png setRenderBin 11;
+#X msg 460 248 /ptr setParent \$1 \, /ptr setTranslation 0 0 -0.25
+\, /ptr setOrientation 0 0 0 \, /ptr setThickness 0.02;
+#X msg 25 539 createNode light1 LightSource \, /light1 setOrientation
+-90 0 0 \, /light1 setTranslation 0 -10 50 \, /light1 setAmbient 1
+1 1 1 \, /light1 setDiffuse 1 1 1 1 \, /light1 setSpecular 1 1 1 1
+\, /light1 setAttenuation 0.01 \, /light1 setCutof 90 \, /light1 setExponent
+3;
+#X msg 447 171 /ptr setSearchLevel 1;
 #X connect 0 0 1 0;
 #X connect 2 0 5 0;
 #X connect 2 1 6 0;
-#X connect 3 0 8 0;
-#X connect 4 0 8 0;
-#X connect 5 0 10 0;
+#X connect 3 0 7 0;
+#X connect 4 0 7 0;
+#X connect 5 0 9 0;
+#X connect 5 0 25 0;
 #X connect 6 0 1 0;
-#X connect 7 0 1 0;
-#X connect 8 1 11 0;
-#X connect 8 3 2 0;
-#X connect 10 0 7 0;
-#X connect 10 0 14 0;
-#X connect 11 0 23 0;
-#X connect 11 0 22 0;
-#X connect 11 0 18 0;
-#X connect 12 0 11 0;
+#X connect 7 1 10 0;
+#X connect 7 3 2 0;
+#X connect 9 0 23 0;
+#X connect 9 0 13 0;
+#X connect 10 0 22 0;
+#X connect 10 0 21 0;
+#X connect 10 0 17 0;
+#X connect 10 0 24 0;
+#X connect 11 0 10 0;
+#X connect 13 0 1 0;
 #X connect 14 0 1 0;
 #X connect 15 0 1 0;
-#X connect 16 0 1 0;
-#X connect 17 0 21 0;
-#X connect 18 0 17 0;
-#X connect 18 1 19 1;
-#X connect 19 0 20 0;
-#X connect 20 0 1 0;
-#X connect 21 0 19 0;
+#X connect 16 0 20 0;
+#X connect 17 0 16 0;
+#X connect 17 1 18 1;
+#X connect 18 0 19 0;
+#X connect 19 0 1 0;
+#X connect 20 0 18 0;
+#X connect 21 0 1 0;
 #X connect 22 0 1 0;
 #X connect 23 0 1 0;
+#X connect 24 0 1 0;
+#X connect 25 0 1 0;
 #X restore 56 146 pd setup_scene;
 #X symbolatom 363 113 10 0 0 0 - - -;
 #X obj 363 47 vradio 20 1 0 2 empty empty empty 0 -8 0 10 -261234 -1
@@ -197,17 +200,17 @@ setScale 100 100 100 \, /floor setStateSetFromFile \$2/Resources/floor.jpg
 #X text 347 334 arms;
 #X obj 78 214 manipObj \$0 1 2 1.jpg -4 0 1 0 0 0 1 1 2;
 #X obj 515 47 nbx 5 20 -1e+37 1e+37 0 0 empty error1 error1: -50 10
-0 12 -62715 -203904 -1 6.32692 256;
+0 12 -62715 -203904 -1 3.32886 256;
 #X obj 515 69 nbx 5 20 -1e+37 1e+37 0 0 empty error2 error2: -50 10
-0 12 -97433 -13381 -1 4.47214 256;
+0 12 -97433 -13381 -1 0 256;
 #X obj 515 91 nbx 5 20 -1e+37 1e+37 0 0 empty error3 error3: -50 10
-0 12 -258113 -86277 -1 5.47723 256;
+0 12 -258113 -86277 -1 0 256;
 #X obj 515 113 nbx 5 20 -1e+37 1e+37 0 0 empty error4 error4: -50 10
-0 12 -260097 -86853 -1 7.07107 256;
+0 12 -260097 -86853 -1 0 256;
 #X obj 515 135 nbx 5 20 -1e+37 1e+37 0 0 empty error5 error5: -50 10
-0 12 -261249 -1 -1 9.70824 256;
+0 12 -261249 -1 -1 0 256;
 #X obj 515 157 nbx 5 20 -1e+37 1e+37 0 0 empty error6 error6: -50 10
-0 12 -257985 -1 -1 12.4599 256;
+0 12 -257985 -1 -1 0 256;
 #X obj 325 214 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 327 240 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
@@ -225,61 +228,99 @@ setScale 100 100 100 \, /floor setStateSetFromFile \$2/Resources/floor.jpg
 #X connect 3 0 5 0;
 #X connect 5 0 4 0;
 #X restore 12 433 pd intersection-debug-print;
+#X msg 552 286 /shp1 debug;
+#X obj 513 348 s \$0-to-SPIN-TCP;
+#X msg 568 323 debug scenegraph;
+#X msg 266 680 /posture setOrientationMode 3 \, /posture setVelocityMode
+1;
+#X msg 526 261 /shp1_const debug;
+#X obj 69 188 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 268 404 vradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144
+-1 -1 2;
+#X msg 267 493 /shp1_const setInteractionMode \$1;
+#X msg 494 495 /shp1_g setInteractionMode \$1;
+#X msg 400 379 /shp1 setInteractionMode \$1;
+#X msg 332 544 /ptr setSearchLevel 1;
+#X obj 404 294 vradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 425 292 STATIC;
+#X text 425 324 SELECT;
+#X text 425 339 DRAG;
+#X text 425 354 THROW;
+#X text 425 308 PASSTHRU;
+#X obj 483 403 vradio 15 1 0 5 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 289 402 STATIC;
+#X text 289 434 SELECT;
+#X text 289 449 DRAG;
+#X text 289 464 THROW;
+#X text 289 418 PASSTHRU;
+#X text 503 402 STATIC;
+#X text 503 433 SELECT;
+#X text 503 448 DRAG;
+#X text 503 463 THROW;
+#X text 503 418 PASSTHRU;
 #X obj 85 335 manipObj \$0 5 2 5.jpg -3 0 5 0 0 0 4 1 1;
 #X obj 80 240 manipObj \$0 2 2 2.jpg -2 0 1 0 0 0 1 1 2;
 #X obj 82 277 manipObj \$0 3 2 3.jpg -3 0 2.5 0 0 0 3 1 1;
 #X obj 91 307 manipObj \$0 4 2 4.jpg -3 0 3.75 0 0 0 1.5 1 1.5;
 #X obj 58 363 manipObj \$0 6 1 smiley.png -3 0 6.5 0 0 90 1 2 2;
-#X msg 495 302 /shp1 debug;
-#X obj 456 364 s \$0-to-SPIN-TCP;
-#X msg 511 339 debug scenegraph;
 #X connect 1 0 2 0;
-#X connect 2 0 46 0;
+#X connect 2 0 40 0;
 #X connect 3 0 2 0;
 #X connect 4 0 2 0;
 #X connect 5 0 2 0;
 #X connect 6 0 2 0;
 #X connect 8 0 2 0;
-#X connect 9 0 14 0;
-#X connect 14 0 47 0;
-#X connect 15 0 47 0;
-#X connect 16 0 52 0;
-#X connect 17 0 47 0;
-#X connect 18 0 2 0;
-#X connect 19 0 2 0;
-#X connect 20 0 2 0;
-#X connect 21 0 24 0;
-#X connect 22 0 21 0;
-#X connect 24 0 23 0;
-#X connect 25 0 22 0;
-#X connect 25 1 22 1;
-#X connect 28 0 29 0;
-#X connect 29 0 30 0;
-#X connect 31 0 32 0;
-#X connect 32 0 30 0;
-#X connect 33 0 43 0;
-#X connect 34 0 28 0;
-#X connect 35 0 30 0;
-#X connect 36 0 35 0;
-#X connect 37 0 34 0;
-#X connect 39 0 43 1;
-#X connect 40 0 31 0;
-#X connect 42 0 40 0;
-#X connect 43 0 37 0;
-#X connect 43 0 42 0;
-#X connect 44 0 45 0;
-#X connect 45 0 47 0;
-#X connect 46 0 7 0;
-#X connect 54 0 57 0;
-#X connect 57 0 53 0;
-#X connect 58 0 63 0;
-#X connect 58 0 73 0;
-#X connect 58 0 74 0;
-#X connect 58 0 75 0;
-#X connect 58 0 76 0;
-#X connect 58 0 77 0;
-#X connect 59 0 51 0;
-#X connect 70 0 63 1;
-#X connect 71 0 74 1;
-#X connect 78 0 79 0;
-#X connect 80 0 79 0;
+#X connect 9 0 41 0;
+#X connect 10 0 46 0;
+#X connect 11 0 41 0;
+#X connect 12 0 2 0;
+#X connect 13 0 2 0;
+#X connect 14 0 2 0;
+#X connect 15 0 18 0;
+#X connect 16 0 15 0;
+#X connect 18 0 17 0;
+#X connect 19 0 16 0;
+#X connect 19 1 16 1;
+#X connect 22 0 23 0;
+#X connect 23 0 24 0;
+#X connect 25 0 26 0;
+#X connect 26 0 24 0;
+#X connect 27 0 37 0;
+#X connect 28 0 22 0;
+#X connect 29 0 24 0;
+#X connect 30 0 29 0;
+#X connect 31 0 28 0;
+#X connect 33 0 37 1;
+#X connect 34 0 25 0;
+#X connect 36 0 34 0;
+#X connect 37 0 31 0;
+#X connect 37 0 36 0;
+#X connect 38 0 39 0;
+#X connect 39 0 41 0;
+#X connect 40 0 7 0;
+#X connect 48 0 51 0;
+#X connect 51 0 47 0;
+#X connect 52 0 57 0;
+#X connect 52 0 95 0;
+#X connect 52 0 96 0;
+#X connect 52 0 97 0;
+#X connect 52 0 98 0;
+#X connect 52 0 99 0;
+#X connect 53 0 45 0;
+#X connect 64 0 57 1;
+#X connect 65 0 96 1;
+#X connect 67 0 68 0;
+#X connect 69 0 68 0;
+#X connect 70 0 45 0;
+#X connect 71 0 68 0;
+#X connect 72 0 57 0;
+#X connect 73 0 74 0;
+#X connect 74 0 41 0;
+#X connect 75 0 41 0;
+#X connect 76 0 41 0;
+#X connect 77 0 41 0;
+#X connect 78 0 76 0;
+#X connect 84 0 75 0;
